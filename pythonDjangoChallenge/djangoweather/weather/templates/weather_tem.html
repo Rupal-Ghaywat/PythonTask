@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Map</title>
+    <!-- Include Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 400px;"></div>
+
+    <script>
+        var map = L.map('map').setView([37.7749, -122.4194], 10);
+
+        // Add the tile layer (e.g., OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add markers for the geolocations
+        {% for location in locations %}
+        L.marker([{{ location.city }}, {{ location.name }}]).addTo(map)
+            .bindPopup("{{ location.name }}");
+        {% endfor %}
+    </script>
+</body>
+</html>
